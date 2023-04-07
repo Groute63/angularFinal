@@ -1,0 +1,9 @@
+.gray-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2f2f2;
+  border: 1px solid black;
+  padding: 20px;
+}

@@ -1,0 +1,12 @@
+.container {
+  padding-top: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-row-link:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
