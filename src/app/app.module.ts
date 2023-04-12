@@ -18,6 +18,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatTableModule} from "@angular/material/table";
 import { StudentInfoComponent } from './student-info/student-info.component';
 import {HttpClientModule} from "@angular/common/http";
+import {GroupInfo} from "./group-info/group-info.component"
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {HttpClientModule} from "@angular/common/http";
     GroupComponent,
     TopMenuComponent,
     StudentComponent,
-    StudentInfoComponent
+    StudentInfoComponent,
+    GroupInfo
   ],
   imports: [
     HttpClientModule,

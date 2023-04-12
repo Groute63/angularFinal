@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 interface Group {
+  id : number;
   name: string;
 }
 
@@ -11,23 +13,21 @@ interface Group {
   styleUrls: ['./group.component.css']
 })
 export class GroupComponent {
-  groups: Group[] = [
-    { name: 'Группа 1' },
-    { name: 'Группа 2' },
-    { name: 'Группа 3' }
-  ];
+  groups: Group[] = [];
+  displayedColumns: string[] = ['name'];
 
- /* constructor(private http: HttpClient) {}*/
+  constructor(private http: HttpClient) {
+  }
 
-  onGroupClick(group: Group) {
-    /*this.http.get('http://localhost:8080/api/group/v2/1').subscribe(
-      (data) => {
-        console.log(`Получена информация для группы ${group.name}:`, data);
-      },
-      (error) => {
-        console.error(`Ошибка при получении информации для группы ${group.name}:`, error);
-      }
-    );
-    console.log(`Нажата группа: ${group.name}`); */
+  ngOnInit(): void {
+    this.getGroups().subscribe((groups: Group[]) => {
+      console.log(groups)
+      this.groups = groups;
+    });
+  }
+
+  private getGroups(): Observable<Group[]> {
+    const url = 'http://localhost:8080/api/groups/v2/getAll';
+    return this.http.get<Group[]>(url)
   }
 }

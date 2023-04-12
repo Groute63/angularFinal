@@ -7,15 +7,14 @@
         <!-- Имя студента -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef> Имя </th>
-
           <td mat-cell *matCellDef="let student"> <a [routerLink]="['/student', student.id]">{{ student.name }}</a> </td>
         </ng-container>
 
         <!-- День рождения студента -->
-      <!--  <ng-container matColumnDef="birthday">
+        <ng-container matColumnDef="birthdate">
           <th mat-header-cell *matHeaderCellDef> День рождения </th>
-          <td mat-cell *matCellDef="let student"> {{ student.birthday | date: 'dd.MM.yyyy' }} </td>
-        </ng-container> -->
+          <td mat-cell *matCellDef="let student"> {{ student.birthdate | date: 'dd.MM.yyyy' }} </td>
+        </ng-container>
 
         <!-- Номер группы студента -->
        <!-- <ng-container matColumnDef="group">
