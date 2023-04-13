@@ -23,7 +23,6 @@ export class GroupService {
     return this.http.get<GroupThisStudents>(url).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 404 || error.status === 400) {
-            console.log('asdasdasd')
           this.router.navigate(['/error-page']);
         }
         return throwError(error);
@@ -31,7 +30,28 @@ export class GroupService {
     );
   }
 
-  addGroup():void{
-    return
+  addGroup(group : Group):Observable<Group>{
+    const url = 'http://localhost:8080/api/groups/v2';
+    return this.http.post<Group>(url,group).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404 || error.status === 400 || error.status === 500) {
+          this.router.navigate(['/error-page']);
+        }
+        return throwError(error);
+      })
+    );
   }
+
+  deleteGroup(id : number): Observable<Group>{
+    const url = 'http://localhost:8080/api/groups/v2/' + id;
+    return this.http.delete<Group>(url).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 404 || error.status === 400 || error.status === 500) {
+          this.router.navigate(['/error-page']);
+        }
+        return throwError(error);
+      })
+    );
+  }
+
 }
