@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { GroupComponent } from "./group/group.component";
-import { StudentComponent } from "./student/student.component";
-import { StudentInfoComponent } from "./student-info/student-info.component";
-import { GroupInfo } from './group-info/group-info.component';
+import { GroupComponent } from "./components/group/group.component";
+import { StudentComponent } from "./components/student/student.component";
+import { StudentInfoComponent } from "./components/student-info/student-info.component";
+import { GroupInfo } from './components/group-info/group-info.component';
+import {ErrorPagengComponent} from "./components/error-pageng/error-pageng.component";
 
 const routes: Routes = [
   { path: 'group', component: GroupComponent },
   { path: 'student', component: StudentComponent },
   { path: "student/:id", component: StudentInfoComponent },
-  { path: "group/:id", component: GroupInfo }
+  { path: "group/:id", component: GroupInfo },
+  { path: 'error-page', component: ErrorPagengComponent },
 ];
 
 @NgModule({

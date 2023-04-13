@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, Observable} from "rxjs";
 import { ActivatedRoute } from '@angular/router';
+import {GroupService} from 'src/app/services/GroupService';
 
 interface Student {
   id: number;
@@ -9,10 +10,6 @@ interface Student {
   birthdate: Date;
   number: string
 }
-
-interface Group {
-    students : Student[]
-  }
 
 @Component({
   selector: 'app-group-info',
@@ -22,23 +19,31 @@ interface Group {
 export class GroupInfo {
   displayedColumns: string[] = ['name','birthdate'];
   id ?: string;
-  students: Student[] = [];     
+  students ?: Student[];
+  isModalOpen = false;
+  studentName ?: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private groupService: GroupService) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id !== null) {
       this.id = id;
+      this.groupService.getGroup(this.id).subscribe((group) => {
+        this.students = group.students;
+      });
     }
-    this.getGroup().subscribe((group) => {
-      console.log(group)
-      this.students = group.students;
-    });
   }
 
-  private getGroup(): Observable<Group> {
-    const url = 'http://localhost:8080/api/groups/v2/' + this.id;
-    return this.http.get<Group>(url)
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  createStudent() {
+    this.closeModal();
   }
 }
