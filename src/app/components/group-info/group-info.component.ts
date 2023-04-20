@@ -3,13 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map, Observable} from "rxjs";
 import { ActivatedRoute } from '@angular/router';
 import {GroupService} from 'src/app/services/GroupService';
-
-interface Student {
-  id: number;
-  name: string;
-  birthdate: Date;
-  number: string
-}
+import {Student} from "../../model/group";
 
 @Component({
   selector: 'app-group-info',

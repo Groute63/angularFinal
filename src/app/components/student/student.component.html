@@ -1,30 +1,76 @@
 <div class="container">
-  <mat-card>
-    <mat-card-title>Список студентов</mat-card-title>
-    <mat-card-content>
-      <table mat-table [dataSource]="students">
+  <ng-container *ngIf="students; else loading">
+    <mat-card>
+      <mat-card-title>Список студентов</mat-card-title>
+      <mat-card-content>
+        <table mat-table [dataSource]="students">
 
-        <!-- Имя студента -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Имя </th>
-          <td mat-cell *matCellDef="let student"> <a [routerLink]="['/student', student.id]">{{ student.name }}</a> </td>
-        </ng-container>
+          <!-- Имя студента -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Имя</th>
+            <td mat-cell *matCellDef="let student"><a [routerLink]="['/student', student.id]">{{ student.name }}</a>
+            </td>
+          </ng-container>
 
-        <!-- День рождения студента -->
-        <ng-container matColumnDef="birthdate">
-          <th mat-header-cell *matHeaderCellDef> День рождения </th>
-          <td mat-cell *matCellDef="let student"> {{ student.birthdate | date: 'dd.MM.yyyy' }} </td>
-        </ng-container>
+          <!-- День рождения студента -->
+          <ng-container matColumnDef="birthdate">
+            <th mat-header-cell *matHeaderCellDef> День рождения</th>
+            <td mat-cell *matCellDef="let student"> {{ student.birthdate | date: 'dd.MM.yyyy' }}
+              <span (click)="updateStudent(student)" class="material-icons"
+                    style="font-size: 20px; position: absolute; right: 20px;cursor: pointer;">edit</span>
+              <span (click)="deleteStudent(student.id)" class="material-icons"
+                    style="font-size: 20px; position: absolute; right: 0;cursor: pointer;">delete</span>
+            </td>
+          </ng-container>
 
-        <!-- Номер группы студента -->
-       <!-- <ng-container matColumnDef="group">
-          <th mat-header-cell *matHeaderCellDef> Группа </th>
-          <td mat-cell *matCellDef="let student"> {{ student.group }} </td>
-        </ng-container>-->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns; "></tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
+    <br>
+
+    <ng-container>
+      <button mat-raised-button (click)="openModal()" style="margin-top: 20px">Создать студента</button>
+    </ng-container>
+    <!-- модальное окно -->
+
+    <div *ngIf="isModalOpen" class="modal-backdrop">
+      <div class="modal">
+        <h2>Студент</h2>
+        <label style="padding: 5px">
+          Имя студента:
+          <br>
+          <input style="padding-top: 4px" type="text" [(ngModel)]="student.name" required>
+          <br>
+          Номер:
+          <br>
+          <input style="padding-top: 4px" type="text" [(ngModel)]="student.number" required>
+          <br>
+          День рожения:
+          <br>
+          <input type = "date" style="padding-top: 4px"  [(ngModel)]="student.birthdate" required>
+          <br>
+          Группа:
+          <br>
+          <select [(ngModel)]="student.groupId">
+            <option *ngFor="let group of groups" [value]="group.id">{{group.name}}</option>
+          </select>
+        </label>
+
+        <div>
+          <button mat-raised-button style="" (click)="closeModal()">Закрыть</button>
+          <button mat-raised-button style="margin-left:140px" (click)="createStudent()">
+            Сохранить
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+  <ng-template #loading>
+    <mat-spinner diameter="50"></mat-spinner>
+  </ng-template>
+
 </div>

@@ -14,7 +14,7 @@ export class GroupComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['name'];
   groupsSubscription ?: Subscription;
   isModalOpen = false;
-  groupName ?: string;
+  group: Group = {students: [], name: ''};
 
   constructor(private groupService: GroupService) {
   }
@@ -40,9 +40,37 @@ export class GroupComponent implements OnInit, OnDestroy {
     this.isModalOpen = false;
   }
 
+  updateGroup(group: Group) {
+    this.group.name = group.name;
+    this.group.id = group.id;
+    console.log(this.group)
+    this.openModal()
+  }
+
   createGroup() {
-    // Здесь можно добавить логику для создания группы
-    this.closeModal();
+    if (this.group.name) {
+      this.groupService.addGroup(this.group).subscribe((newGroup: Group) => {
+        if (this.group.id) {
+          for (let i = 0; i < this.groups.length; i++) {
+            if (this.groups[i].id == newGroup.id) {
+              this.groups[i] = newGroup
+            }
+          }
+        } else {
+          this.groups.push(newGroup);
+        }
+        this.groups = [...this.groups]
+        this.closeModal();
+        this.group.name = ''
+        this.group.id = undefined;
+      })
+    }
+  }
+
+  deleteGroup(id: number) {
+    this.groupService.deleteGroup(id).subscribe(() => {
+      this.groups = this.groups.filter((group: Group) => group.id !== id);
+    });
   }
 
 }

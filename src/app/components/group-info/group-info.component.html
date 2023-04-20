@@ -23,24 +23,6 @@
         </table>
       </mat-card-content>
     </mat-card>
-    <ng-container>
-      <button mat-raised-button (click)="openModal()" style="margin-top: 20px">Добавить студента</button>
-    </ng-container>
-
-    <!-- модальное окно -->
-
-    <div *ngIf="isModalOpen" class="modal-backdrop">
-      <div class="modal">
-        <h2>Создание студента</h2>
-        <form (submit)="createStudent()">
-          <label style="padding: 5px">
-            Имя:
-            <input type="text" name="groupName" [(ngModel)]="studentName">
-          </label>
-          <button type="submit">Создать</button>
-        </form>
-      </div>
-    </div>
 
   </ng-container>
   <ng-template #loading>

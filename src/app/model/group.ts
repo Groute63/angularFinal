@@ -1,13 +1,15 @@
 export interface Group {
-  id : number;
-  name: string;
+  id ?: number;
+  name : string;
+  students : Student[];
 }
 
 export interface Student {
-  id: number;
+  id ?: number;
   name: string;
-  birthdate: Date;
+  birthdate ?: string;
   number: string
+  groupId:string
 }
 
 export interface GroupThisStudents {
